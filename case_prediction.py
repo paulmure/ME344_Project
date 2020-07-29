@@ -27,3 +27,5 @@ plt.plot(history.history['mean_squared_error'])
 plt.savefig('graph.png')
 
 test_loss, test_acc = model.evaluate(test_data,  test_labels, verbose=2)
+
+model.save()
