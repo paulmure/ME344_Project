@@ -4,9 +4,9 @@
 #SBATCH --partition=normal
 #SBATCH --nodes=3
 #SBATCH --ntasks-per-node=32
-#SBATCH --mail-user=
+#SBATCH --mail-user=paulmure@stanford.edu
 #SBATCH --mail-type=ALL
-#SBATCH --time=10:00:00
+#SBATCH --time=12:00:00
 
 module load intel/psxe-2020
 

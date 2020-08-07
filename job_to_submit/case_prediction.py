@@ -1,5 +1,3 @@
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
 from tensorflow.keras.layers import Input, LSTM, Dense, Dropout, BatchNormalization
 from tensorflow.keras.losses import MeanSquaredError
@@ -9,8 +7,9 @@ from matplotlib import pyplot as plt
 
 
 def get_data():
-    filename = 'data/processed/cases_and_deaths.csv'
+    filename = 'cases_and_deaths.csv'
     data = np.genfromtxt(filename, delimiter=',', dtype=int)
+    np.savetxt('test_set.csv', data, delimiter=',', fmt='%i')
 
     np.random.shuffle(data)
 
@@ -67,24 +66,13 @@ def make_plot(history):
     plt.savefig('history.png')
 
 
-def test_model(model, datas):
-    inp = datas['test_x']
-    out = datas['test_y']
-    test_loss, test_acc = model.evaluate(inp, out, verbose=2)
-    return test_loss, test_acc
-
-
 def main():
     datas = get_sliced_data(get_data())
     model = make_model()
     
-    history = fit_model(model, datas, 3, callbacks=[cp_callback()])
+    history = fit_model(model, datas, 200, callbacks=[cp_callback()])
     
     make_plot(history)
-    test_loss, test_acc = test_model(model, datas)
-
-    print('test_loss = {}'.format(test_loss))
-    print('test_acc = {}'.format(test_acc))
 
 
 if __name__ == '__main__':
